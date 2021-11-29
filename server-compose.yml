@@ -1,0 +1,8 @@
+version: "3.3"
+services:
+  websocket_server:
+    build:
+      context: .
+      dockerfile: server.Dockerfile
+    ports:
+      - "8001:8001"

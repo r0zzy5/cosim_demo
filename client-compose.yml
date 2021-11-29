@@ -1,0 +1,8 @@
+version: "3.3"
+services:
+  websocket_client:
+    build:
+      context: .
+      dockerfile: client.Dockerfile
+    environment:
+      WEBSOCKET_SERVER: '192.168.251.196:8001'
