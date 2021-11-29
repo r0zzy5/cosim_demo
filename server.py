@@ -2,6 +2,8 @@ import asyncio
 import websockets
 import json
 import random
+import os
+import sys
 
 OBJECTS = {}
 VIEWERS = set()
@@ -45,8 +47,12 @@ async def update():
         await asyncio.sleep(dt)
 
 async def main():
-    async with websockets.serve(handler,"",8001):
-        await update()
+    websocket_port = os.environ.get('WEBSOCKET_PORT')
+    if websocket_port:
+        async with websockets.serve(handler,"",websocket_port):
+            await update()
+    else:
+        sys.exit('WEBSOCKET_PORT environment variable not set')
 
 if __name__ == "__main__":
     asyncio.run(main())
