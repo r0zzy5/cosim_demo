@@ -60,7 +60,7 @@ async def main():
     )
 
     args = parser.parse_args()
-    print(f"Starting websocker server on port {args.port}")
+    print(f"Starting websocket server on port {args.port}")
     
     async with websockets.serve(handler,"",args.port):
         await update()
