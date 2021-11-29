@@ -7,7 +7,7 @@ import sys
 async def main():
     websocker_server = os.environ.get('WEBSOCKET_SERVER')
     if websocker_server:
-        async with websockets.connect("ws://localhost:8001") as websocket:
+        async with websockets.connect(f'ws://{websocker_server}') as websocket:
             data_out = {"type":"viewer"}
             await websocket.send(json.dumps(data_out))
 
