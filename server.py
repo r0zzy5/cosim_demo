@@ -36,7 +36,7 @@ async def object(websocket):
             break
 
 async def viewer(websocket):
-    print("Client connected as 'object'")
+    print("Client connected as 'viewer'")
     VIEWERS.add(websocket)
     try:
         await websocket.wait_closed()
