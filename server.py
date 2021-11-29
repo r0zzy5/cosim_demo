@@ -2,8 +2,7 @@ import asyncio
 import websockets
 import json
 import random
-import os
-import sys
+import argparse
 
 OBJECTS = {}
 VIEWERS = set()
@@ -20,6 +19,7 @@ async def handler(websocket, path):
             await viewer(websocket)
 
 async def object(websocket):
+    print("Client connected as 'object'")
     x = random.randint(2,19)
     y = random.randint(2,19)
     OBJECTS[websocket] = {"x":x, "y":y}
@@ -31,14 +31,17 @@ async def object(websocket):
             data = json.loads(message)
             OBJECTS[websocket] = data
         except websockets.ConnectionClosed:
+            print("Client (object) disconnected")
             del OBJECTS[websocket]
             break
 
 async def viewer(websocket):
+    print("Client connected as 'object'")
     VIEWERS.add(websocket)
     try:
         await websocket.wait_closed()
     finally:
+        print("Client (viewer) disconnected")
         VIEWERS.remove(websocket)
 
 async def update():
@@ -47,12 +50,20 @@ async def update():
         await asyncio.sleep(dt)
 
 async def main():
-    websocket_port = os.environ.get('WEBSOCKET_PORT')
-    if websocket_port:
-        async with websockets.serve(handler,"",websocket_port):
-            await update()
-    else:
-        sys.exit('WEBSOCKET_PORT environment variable not set')
+    parser = argparse.ArgumentParser(description='Websocket Server')
+
+    parser.add_argument("port",
+        help="the port used to accept websocket connections [default 8001]",
+        nargs='?',
+        default=8001,
+        type=int
+    )
+
+    args = parser.parse_args()
+    print(f"Starting websocker server on port {args.port}")
+    
+    async with websockets.serve(handler,"",args.port):
+        await update()
 
 if __name__ == "__main__":
     asyncio.run(main())
