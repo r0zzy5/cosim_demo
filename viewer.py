@@ -1,16 +1,22 @@
 import asyncio
 import websockets
 import json
+import os
+import sys
 
 async def main():
-    async with websockets.connect("ws://localhost:8001") as websocket:
-        data_out = {"type":"viewer"}
-        await websocket.send(json.dumps(data_out))
+    websocker_server = os.environ.get('WEBSOCKET_SERVER')
+    if websocker_server:
+        async with websockets.connect("ws://localhost:8001") as websocket:
+            data_out = {"type":"viewer"}
+            await websocket.send(json.dumps(data_out))
 
-        async for message in websocket:
-            data_in = json.loads(message)
-            if data_in:
-                print(message)
+            async for message in websocket:
+                data_in = json.loads(message)
+                if data_in:
+                    print(message)
+    else:
+        sys.exit('WEBSOCKET_SERVER environment variable not set')
 
 if __name__ == "__main__":
     asyncio.run(main())
