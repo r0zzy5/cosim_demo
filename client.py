@@ -5,7 +5,7 @@ import math
 import os
 import sys
 
-dt = 1/30
+dt = 1/10
 w = 2 * math.pi / 5
 r = 0.5
 
