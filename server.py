@@ -3,10 +3,13 @@ import websockets
 import json
 import random
 import argparse
+import math
 
 OBJECTS = {}
 VIEWERS = set()
 dt = 1/10
+width = 1000
+height = 1000
 
 async def handler(websocket, path):
     message = await websocket.recv()
@@ -20,9 +23,14 @@ async def handler(websocket, path):
 
 async def object(websocket):
     print("Client connected as 'object'")
-    x = random.randint(2,19)
-    y = random.randint(2,19)
-    OBJECTS[websocket] = {"x":x, "y":y}
+    x = random.randint(0,1000)
+    y = random.randint(0,1000)
+    OBJECTS[websocket] = {
+        "x": x,
+        "y": y,
+        "width": width,
+        "height": height,
+    }
     await websocket.send(json.dumps(OBJECTS[websocket]))
 
     while True:
@@ -47,6 +55,9 @@ async def viewer(websocket):
 async def update():
     while True:
         websockets.broadcast(VIEWERS, json.dumps(list(OBJECTS.values())))
+        for websocket, pos1 in OBJECTS.items():
+            objects = [pos2 for pos2 in OBJECTS.values() if check_distance(pos1, pos2)]
+            await websocket.send(json.dumps(objects))
         await asyncio.sleep(dt)
 
 async def main():
@@ -64,6 +75,12 @@ async def main():
     
     async with websockets.serve(handler,"",args.port):
         await update()
+
+def check_distance(p1,p2):
+    dx = p1['x'] - p2['x']
+    dy = p1['y'] - p2['y']
+    r = math.sqrt(math.pow(dx,2) + math.pow(dy,2))
+    return 0 < r <= 100
 
 if __name__ == "__main__":
     asyncio.run(main())

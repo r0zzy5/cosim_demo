@@ -25,19 +25,22 @@ function setupChart() {
             },
             scales: {
                 x: {
-                    min: 1,
-                    max: 20,
+                    min: 0,
+                    max: 1000,
                     ticks: {
-                        stepSize: 1
+                        stepSize: 50
                     }
                 },
                 y: {
-                    min: 1,
-                    max: 20,
+                    min: 0,
+                    max: 1000,
                     ticks: {
-                        stepSize: 1
+                        stepSize: 50
                     }
                 },
+            },
+            animation: {
+                duration: 0
             }
         }
     };

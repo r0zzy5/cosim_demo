@@ -4,8 +4,8 @@ import json
 import math
 import os
 import sys
+from boid import Boid
 
-dt = 1/10
 w = 2 * math.pi / 5
 r = 0.5
 
@@ -18,18 +18,25 @@ async def main():
 
             message = await websocket.recv()
             data_in = json.loads(message)
-            xo = data_in["x"]
-            yo = data_in["y"]
+            x0 = float(data_in["x"])
+            y0 = float(data_in["y"])
+            width = data_in["width"]
+            height = data_in["height"]
 
-            t = 0
-            while True:
+            boid = Boid(x0, y0, width, height)
+
+            async for message in websocket:
+                data_in = json.loads(message)
+                boids = [Boid(pos['x'],pos['x'],width,height) for pos in data_in]
+                boid.edges()
+                boid.apply_behaviour(boids)
+                boid.update()
                 msg = {
-                    "x": r * math.cos(w*t) + xo,
-                    "y": r * math.sin(w*t) + yo,
+                    "x": boid.position[0],
+                    "y": boid.position[1],
                 }
                 await websocket.send(json.dumps(msg))
-                await asyncio.sleep(dt)
-                t += dt
+
     else:
         sys.exit('WEBSOCKET_SERVER environment variable not set')
 
