@@ -23,11 +23,11 @@ async def handler(websocket, path):
 
 async def object(websocket):
     print("Client connected as 'object'")
-    pos = np.random.rand(2) * 1000
-    vel = (np.random.rand(2) - 0.5) * 10
-    OBJECTS[websocket] = {"x":pos[0],"y":pos[1],"dx":vel[0],"dy":vel[1]}
-    msg = OBJECTS[websocket] | {"width": width,"height": height}
+    
+    msg = {"width": width, "height": height}
     await websocket.send(json.dumps(msg))
+
+    OBJECTS[websocket] = {"x": 0, "y": 0, "dx": 0, "dy": 0}
 
     try:
         async for message in websocket:
@@ -48,8 +48,9 @@ async def viewer(websocket):
 
 async def update():
     while True:
-        recipients = VIEWERS.union(set(OBJECTS.keys()))
-        websockets.broadcast(recipients, json.dumps(list(OBJECTS.values())))
+        websockets.broadcast(list(OBJECTS.keys()), json.dumps(list(OBJECTS.values())))
+        objects = [{"x":obj["x"],"y":obj["y"]} for obj in OBJECTS.values()]
+        websockets.broadcast(VIEWERS, json.dumps(objects))
         await asyncio.sleep(dt)
 
 async def main():

@@ -2,14 +2,9 @@ import numpy as np
 
 class Boid():
 
-    def __init__(self, x, y, width, height, dx=None, dy=None):
+    def __init__(self, x, y, dx, dy, width, height):
         self.position = np.array([x, y])
-        
-        if dx == None or dy == None:
-            self.velocity = (np.random.rand(2) - 0.5) * 10
-        else:
-            self.velocity = np.array([dx,dy])
-
+        self.velocity = np.array([dx,dy])
         self.acceleration = (np.random.rand(2) - 0.5) / 2
         self.max_force = 0.3
         self.max_speed = 5
