@@ -5,4 +5,4 @@ services:
       context: .
       dockerfile: client.Dockerfile
     environment:
-      WEBSOCKET_SERVER: '192.168.251.196:8001'
+      WEBSOCKET_SERVER: '172.20.10.3:8001'

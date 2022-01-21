@@ -1,8 +1,10 @@
 import asyncio
-import websockets
 import json
 import os
 import sys
+
+import websockets
+
 
 async def main():
     websocker_server = os.environ.get('WEBSOCKET_SERVER')
