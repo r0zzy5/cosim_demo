@@ -65,4 +65,8 @@ services:
 1. Set up the server and viewer.
 2. Login to rancher using above instructions.
 3. Create a new deployment in rancher.
-4. Add the image 
+4. Add the image "rnbrocks/cosim_demo:latest".
+5. Confirm the ip address of the network you would like to use. You can do this by entering the cmd `ifconfig` if using linux/mac or use the cmd `ipconfig` if using Powershell.
+6. Add the environment variable pair of `WEBSOCKET_SERVER` and `your_ip_address:8001` (similar to step 3 of "Setting up a client using docker-compose"). Replace "your_ip_address" with the ip address of your network.
+7. Set the replica value to 1.
+8. Save the deployment and the dot should appear in the viewer screen. This might take a bit of time but you should see the status "containercreating" in rancher.
