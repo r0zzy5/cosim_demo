@@ -12,7 +12,8 @@ To test docker works, in the terminal enter "docker run hello-world". You should
     1. Check whether it is disabled (instructions ???).
     2. Enable this in the bios (instructions differ depending on machine. I did this by pressing f10 on boot but you would need to google how to do so for your machine).
 - "WSL 2 installation is incomplete.":
-    1. Follow the link to install the kernel update.
+    1. Follow the link to install the kernel update using Step 4.
+    2. Set WSL 2 as the default version using Step 5 of the link.
 
 
 ## Install rancher:
