@@ -1,5 +1,5 @@
 window.addEventListener("DOMContentLoaded", () => {
-    const websocket = new WebSocket("ws://localhost:8001");
+    const websocket = new WebSocket("ws://WEBSOCKET_SERVER");
     let event = {type: "viewer"};
     websocket.onopen = () => websocket.send(JSON.stringify(event));
     var chart = setupChart();

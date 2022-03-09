@@ -1,11 +1,10 @@
-FROM python:3.10-bullseye
+FROM python:3.10-alpine
 
 WORKDIR /app
 
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
-COPY client.py client.py
-COPY boid.py boid.py
+COPY src/* .
 
 CMD ["python3","client.py"]
