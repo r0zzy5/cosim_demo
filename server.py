@@ -2,8 +2,6 @@ import asyncio
 import websockets
 import json
 import argparse
-import math
-import numpy as np
 
 OBJECTS = {}
 VIEWERS = set()

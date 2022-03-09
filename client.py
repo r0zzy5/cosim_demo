@@ -4,7 +4,7 @@ import json
 import math
 import os
 import sys
-import numpy as np
+from random import random
 from boid import Boid
 
 w = 2 * math.pi / 5
@@ -22,8 +22,8 @@ async def main():
             width = data_in["width"]
             height = data_in["height"]
 
-            pos = np.random.rand(2) * 1000
-            vel = (np.random.rand(2) - 0.5) * 10
+            pos = [random() * 1000 for _ in range(2)]
+            vel = [(random() - 0.5) * 10 for _ in range(2)]
 
             boid = Boid(pos[0], pos[1], vel[0], vel[1], width, height)
 
