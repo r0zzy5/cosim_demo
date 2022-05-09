@@ -1,6 +1,7 @@
 #import numpy as np
 from random import random
 import math
+from prey import Prey
 
 add = lambda v1,v2: [x + y for x,y in zip(v1,v2)]
 sub = lambda v1,v2: [x - y for x,y in zip(v1,v2)]
