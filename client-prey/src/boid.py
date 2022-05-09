@@ -1,13 +1,15 @@
 import numpy as np
+from random import random
+import math
 
 from prey import Prey
 
 class Boid():
 
     def __init__(self, x, y, dx, dy, width, height):
-        self.position = np.array([x, y])
-        self.velocity = np.array([dx,dy])
-        self.acceleration = (np.random.rand(2) - 0.5) / 2
+        self.position = [x, y]
+        self.velocity = [dx,dy]
+        self.acceleration = [random() - 0.5) / 2 for _ in range(2)]
         self.max_force = 0.3
         self.max_speed = 5
         self.perception = 100
@@ -15,11 +17,11 @@ class Boid():
         self.height = height
 
     def update(self):
-        self.position += self.velocity
-        self.velocity += self.acceleration
+        self.position = add(self.position,self.velocity)
+        self.velocity = add(self.velocity,self.acceleration)
         #limit
-        if np.linalg.norm(self.velocity) > self.max_speed:
-            self.velocity = self.velocity / np.linalg.norm(self.velocity) * self.max_speed
+        if norm(self.velocity) > self.max_speed:
+            self.velocity = scale(self.velocity, self.max_speed)
 
         self.acceleration = np.zeros(2)
 
@@ -30,10 +32,10 @@ class Boid():
 
         prey_cohesion = self.preyCohesion(prey)
 
-        self.acceleration += alignment
-        self.acceleration += cohesion
-        self.acceleration += separation
-        self.acceleration += prey_cohesion
+        self.acceleration = add(self.acceleration,alignment)
+        self.acceleration = add(self.acceleration,cohesion)
+        self.acceleration = add(self.acceleration,separation)
+        self.acceleration = add(self.acceleration,separation)
 
     def edges(self):
         if self.position[0] > self.width:
@@ -47,12 +49,12 @@ class Boid():
             self.position[1] = self.height
 
     def align(self, boids):
-        steering = np.zeros(2)
+        steering = [0,0]
         total = 0
-        avg_vector = np.zeros(2)
+        avg_vector = [0,0]
         for boid in boids:
-            if np.linalg.norm(boid.position - self.position) < self.perception:
-                avg_vector += boid.velocity
+            if norm(sub(boid.position,self.position) < self.perception:
+                avg_vector = add(avg_vector,boid.velocity)
                 total += 1
         if total > 0:
             avg_vector /= total
