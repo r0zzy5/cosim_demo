@@ -162,8 +162,8 @@ class Boid():
             prey_obj = Prey(preypos[0], preypos[1], preypos[2], 0, 0, 0, 0, 0)
             misspos = [self.position[0],self.position[1], 0]
             vm = [self.velocity[0],self.velocity[1], 0]
-            if norm([preypos - misspos]) < self.perception + 500:
-                if norm([preypos-misspos]) > 10:
+            if norm(sub(preypos - misspos)) < self.perception + 500:
+                if norm(sub(preypos-misspos)) > 10:
                     r = prey_obj.position - misspos
                     vr = prey_obj.velocity - vm
                     rotVec = (cross(r,vr)) / (r @ r)
