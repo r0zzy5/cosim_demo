@@ -1,0 +1,6 @@
+version: "3.3"
+services:
+  cosim_server:
+    image: r0zzy5/cosim_server:latest
+    ports:
+      - "8001:8001"

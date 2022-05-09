@@ -1,0 +1,6 @@
+version: "3.3"
+services:
+  cosim_client:
+    image: r0zzy5/cosim_client:latest
+    environment:
+      WEBSOCKET_SERVER: '100.102.0.91:8001'
