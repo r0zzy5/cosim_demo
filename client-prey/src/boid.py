@@ -42,7 +42,7 @@ class Boid():
 
         self.acceleration = [0,0]
 
-    def apply_behaviour(self, boids):
+    def apply_behaviour(self, boids, prey):
         alignment = self.align(boids)
         cohesion = self.cohesion(boids)
         separation = self.separation(boids)
