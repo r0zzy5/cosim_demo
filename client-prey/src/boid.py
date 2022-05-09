@@ -164,15 +164,15 @@ class Boid():
             vm = [self.velocity[0],self.velocity[1], 0]
             if norm(sub(preypos - misspos)) < self.perception + 500:
                 if norm(sub(preypos-misspos)) > 10:
-                    r = prey_obj.position - misspos
-                    vr = prey_obj.velocity - vm
+                    r = [prey_obj.position[0] - misspos[0], prey_obj.position[1] - misspos[1], prey_obj.position[2] - misspos[2]]
+                    vr = [prey_obj.velocity[0] - vm[0], prey_obj.velocity[1] - vm[1], prey_obj.velocity[2] - vm[2]]
                     rotVec = (cross(r,vr)) / (r @ r)
                     steering = (-5 * norm(vr) * cross(vm,rotVec)) / (norm(vm))
                     steering = [steering[0],steering[1]]
                 else:
-                    vec_to_tar = prey_obj.position - misspos
+                    vec_to_tar = [prey_obj.position[0] - misspos[0], prey_obj.position[1] - misspos[1], prey_obj.position[2] - misspos[2]]
                     if norm(vec_to_tar) > 0:
                         vec_to_tar = (vec_to_tar / norm(vec_to_tar)) * self.max_speed
-                    steering = (vec_to_tar - vm) * 100
+                    steering = ([(vec_to_tar[0] - vm[0])*100, (vec_to_tar[1] - vm[1])*100, (vec_to_tar[2] - vm[2])*100)
                     steering = [steering[0],steering[1]]
         return steering
