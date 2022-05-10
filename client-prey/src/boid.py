@@ -15,6 +15,9 @@ def cross(a, b):
     
     return c
 
+def dot(a, b):
+    return sum(x*y for x, y in zip(a, b))
+
 class Boid():
     
     def __init__(self, x, y, dx, dy, width, height):
