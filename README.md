@@ -41,7 +41,7 @@ services:
 2. The username will be "admin" and the password will be the one you created in step 6 of 'First time installation'.
 	
 ### Troubleshooting:
-- The grep cmd might not be recognised by some terminals (Powershell). You may need to use a linux terminal.
+- The grep cmd might not be recognised by some terminals (Powershell). You may need to use a linux terminal. this can work for powershell : docker-compose logs | Findstr "Bootstrap Password"
 	
 ## Setting the demo up:
 ### Setting up the server and viewer:
